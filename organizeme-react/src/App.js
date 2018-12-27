@@ -3,11 +3,13 @@ import './App.css';
 import { listStudents } from './repository/StudentRepository';
 import { StudentsList } from './components/StudentsList';
 import { AddNewStudent } from './components/AddNewStudent';
+import {getAllStudents} from './repository/StudentRepository';
 class App extends Component {
   constructor(props){
     super(props);
+    
     this.state = {
-      students: listStudents()
+      students: []
     }
   }
   handleChangeDetails = (index, student) =>{
@@ -27,7 +29,25 @@ class App extends Component {
     students.splice(index, 1);
     this.setState({students})
   }
+  componentDidMount() {
+    this.loadData();
+  }
+  loadData = () => {
+    getAllStudents()
+      .then((data) => {
+        console.log('data: ', data)
+        this.setState({
+          students: data
+        })
+        console.log(this.state.students)
+      });
+      
+  };
+
+
+
   render() {
+   
     return (
       <div className="App">
         <StudentsList students={this.state.students} handleChangeDetails={this.handleChangeDetails} deleteStudent={this.deleteStudent}/>

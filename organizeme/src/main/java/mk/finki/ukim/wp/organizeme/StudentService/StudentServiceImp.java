@@ -38,7 +38,7 @@ import mk.finki.ukim.wp.organizeme.persistence.StudentRepository;
 	public Student postStudent(PostStudentDto student) throws StudentProgramNotFound {
 		StudyProgram sp = repo.getAllStudyPrograms()
 							.stream()
-							.filter(x->x.name.equals(student.name))
+							.filter(x->x.name.equalsIgnoreCase(student.ProgramName))
 							.findFirst()
 							.orElse(null);
 		if (sp == null){
